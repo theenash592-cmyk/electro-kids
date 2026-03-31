@@ -1,183 +1,193 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Electro Kids Certificate Verification</title>
+    <title>ElectroKids Certificate Verification</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: linear-gradient(135deg, gold, #f7e27d);
-      padding: 50px;
-    }
+    <!-- Fancy Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
-    h1 {
-      font-size: 40px;
-      font-weight: bold;
-      color: darkgreen;
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, gold, #f5d76e);
+            padding: 50px;
+        }
 
-    .logo {
-      width: 120px;
-      margin-bottom: 10px;
-    }
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 40px;
+            font-weight: bold;
+            color: #0a3d2f;
+            margin-bottom: 10px;
+            animation: glow 2s infinite alternate;
+        }
 
-    input {
-      padding: 12px;
-      width: 320px;
-      font-size: 14px;
-      margin-top: 20px;
-    }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff; }
+            to { text-shadow: 0 0 20px #0a3d2f; }
+        }
 
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
 
-    #result {
-      margin-top: 30px;
-      font-size: 20px;
-      font-weight: bold;
-    }
+        .box {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: inline-block;
+        }
 
-    /* ❌ blinking red if not verified */
-    .not-found {
-      color: red;
-      animation: blink 1s infinite;
-    }
+        input {
+            padding: 12px;
+            width: 320px;
+        }
 
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #0a3d2f;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-    /* 🎉 confetti canvas */
-    #confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-    }
+        .valid {
+            color: green;
+            font-weight: bold;
+            animation: pop 0.5s ease;
+        }
 
-    /* credit */
-    .credit {
-      margin-top: 40px;
-      color: green;
-      font-weight: bold;
-    }
-  </style>
+        .invalid {
+            color: red;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%,100% {opacity:1;}
+            50% {opacity:0;}
+        }
+
+        @keyframes pop {
+            from {transform: scale(0.8);}
+            to {transform: scale(1);}
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .credit {
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- 🖼️ LOGO -->
-  <img src="logo.png" class="logo">
+<!-- LOGO -->
+<img src="logo.png" class="logo">
 
-  <!-- 🟢 TITLE -->
-  <h1>ELECTRO KIDS</h1>
+<div class="title">ELECTRO KIDS</div>
 
-  <!-- 🔎 INPUT -->
-  <input type="text" id="code" placeholder="Certificate Number | Student No. | Semester No. | Batch No. | Batch Year">
-  
-  <button onclick="verify()">Verify</button>
+<div class="box">
+    <h2>Certificate Verification</h2>
 
-  <!-- RESULT -->
-  <div id="result"></div>
+    <p><b>Certificate Number</b></p>
+    <p style="font-size:13px;">
+        Student No. | Semester No. | Batch No. | Batch Year
+    </p>
 
-  <!-- 🎉 CONFETTI -->
-  <canvas id="confetti"></canvas>
+    <input type="text" id="certID">
+    <br>
+    <button onclick="verifyCertificate()">Verify</button>
 
-  <!-- 👇 SCRIPT -->
-  <script>
+    <div id="result"></div>
 
-    // 📚 STUDENT DATABASE
-    const data = {
-      "01010125": "NOEL SHAAN",
-      "02010125": "KOSANA THEENASH",
-      "03010125": "VARAD NAIR",
-      "04010125": "SHREST IYER",
-      "05020125": "NOEL SHAAN",
-      "06020125": "KOSANA THEENASH",
-      "07020125": "VARAD NAIR",
-      "08020125": "SHREST IYER"
-    };
+    <div class="credit">
+        Site developed by K. Theenash | Electro Kids
+    </div>
+</div>
 
-    function verify() {
-      let code = document.getElementById("code").value.trim();
-      let result = document.getElementById("result");
+<canvas id="confetti"></canvas>
 
-      if (data[code]) {
-        result.className = "";
-        result.innerHTML = "✅ Verified!<br>Student: " + data[code];
+<script>
+
+const certificates = {
+    "01010125": { name: "NOEL SHAAN", sem: "I", batch: "1", year: "2025" },
+    "02010125": { name: "KOSANA THEENASH", sem: "I", batch: "1", year: "2025" },
+    "03010125": { name: "VARAD NAIR", sem: "I", batch: "1", year: "2025" },
+    "04010125": { name: "SHREST IYER", sem: "I", batch: "1", year: "2025" },
+    "05020125": { name: "NOEL SHAAN", sem: "II", batch: "1", year: "2025" },
+    "06020125": { name: "KOSANA THEENASH", sem: "II", batch: "1", year: "2025" },
+    "07020125": { name: "VARAD NAIR", sem: "II", batch: "1", year: "2025" },
+    "08020125": { name: "SHREST IYER", sem: "II", batch: "1", year: "2025" }
+};
+
+function verifyCertificate() {
+    const id = document.getElementById("certID").value.trim();
+    const resultDiv = document.getElementById("result");
+
+    if (certificates[id]) {
+        const cert = certificates[id];
+
+        resultDiv.innerHTML = `
+            <p class="valid">✔ Certificate Verified & Valid</p>
+            <p><strong>${cert.name}</strong></p>
+            <p>Semester: ${cert.sem}</p>
+        `;
+
         startConfetti();
-      } else {
-        result.className = "not-found";
-        result.innerHTML = "❌ Not Verified!";
-        stopConfetti();
-      }
+
+    } else {
+        resultDiv.innerHTML = `<p class="invalid">✖ Invalid Certificate Number</p>`;
     }
+}
 
-    // 🎉 CONFETTI SYSTEM
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
+/* CONFETTI EFFECT */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+let confetti = [];
 
-    let pieces = [];
-    let running = false;
-
-    function startConfetti() {
-      pieces = [];
-      running = true;
-
-      for (let i = 0; i < 120; i++) {
-        pieces.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 8 + 4,
-          speed: Math.random() * 3 + 2,
-          color: `hsl(${Math.random()*360}, 100%, 50%)`,
-          tilt: Math.random() * 10 - 5
+function startConfetti() {
+    confetti = [];
+    for (let i = 0; i < 100; i++) {
+        confetti.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 6,
+            d: Math.random() * 5
         });
-      }
-
-      animate();
     }
 
-    function stopConfetti() {
-      running = false;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    animateConfetti();
+}
 
-    function animate() {
-      if (!running) return;
+function animateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+        ctx.fillStyle = "gold";
+        ctx.fill();
+    });
 
-      pieces.forEach(p => {
-        ctx.fillStyle = p.color;
-        ctx.fillRect(p.x, p.y, p.size, p.size);
+    requestAnimationFrame(animateConfetti);
+}
 
-        p.y += p.speed;
-        p.x += Math.sin(p.y * 0.05) + p.tilt;
-
-        if (p.y > canvas.height) {
-          p.y = -10;
-          p.x = Math.random() * canvas.width;
-        }
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-  </script>
-
-  <!-- 🟢 CREDIT -->
-  <div class="credit">
-    Site developed by K. Theenash | Electro Kids
-  </div>
+</script>
 
 </body>
 </html>
