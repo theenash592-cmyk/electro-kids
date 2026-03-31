@@ -7,14 +7,19 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('background.png'); /* Upload your 2nd image with this name */
-            background-size: cover;
-            background-position: center;
+            background-color: #d4f5d0; /* light green background */
             padding: 50px;
         }
 
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0a5c2f;
+            margin-bottom: 10px;
+        }
+
         .box {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -22,15 +27,15 @@
         }
 
         input {
-            padding: 10px;
-            width: 300px;
+            padding: 12px;
+            width: 320px;
             margin-top: 10px;
         }
 
         button {
             padding: 10px 20px;
             margin-top: 10px;
-            background-color: #1a3c6e;
+            background-color: #0a5c2f;
             color: white;
             border: none;
             cursor: pointer;
@@ -54,29 +59,31 @@
         .credit {
             margin-top: 20px;
             font-size: 14px;
-            color: #333;
+            color: green;
         }
     </style>
 </head>
 
 <body>
 
+<div class="title">ELECTRO KIDS</div>
+
 <div class="box">
     <h2>Certificate Verification</h2>
 
-    <p><b>Enter Certificate Code</b></p>
+    <p><b>Certificate Number</b></p>
     <p style="font-size:13px;">
-        Format: Student No. | Semester No. | Batch No. | Batch Year
+        Student No. | Semester No. | Batch No. | Batch Year
     </p>
 
-    <input type="text" id="certID" placeholder="Example: 01010125">
+    <input type="text" id="certID" placeholder="">
     <br>
     <button onclick="verifyCertificate()">Verify</button>
 
     <div class="result" id="result"></div>
 
     <div class="credit">
-        Site developed by K. Theenash
+        Site developed by K. Theenash | Electro Kids
     </div>
 </div>
 
@@ -113,7 +120,7 @@ function verifyCertificate() {
             <p><strong>Duration:</strong> ${cert.from} to ${cert.to}</p>
         `;
     } else {
-        resultDiv.innerHTML = `<p class="invalid">✖ Invalid Certificate ID</p>`;
+        resultDiv.innerHTML = `<p class="invalid">✖ Invalid Certificate Number</p>`;
     }
 }
 
