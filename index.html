@@ -2,25 +2,28 @@
 <html>
 <head>
     <title>ElectroKids Certificate Verification</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #000000;
+            background-image: url('background.png'); /* Upload your 2nd image with this name */
+            background-size: cover;
+            background-position: center;
             padding: 50px;
         }
 
         .box {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             display: inline-block;
         }
 
         input {
             padding: 10px;
-            width: 250px;
+            width: 300px;
             margin-top: 10px;
         }
 
@@ -47,105 +50,73 @@
             color: red;
             font-weight: bold;
         }
+
+        .credit {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+        }
     </style>
 </head>
+
 <body>
 
 <div class="box">
     <h2>Certificate Verification</h2>
-    <p>Enter Certificate ID</p>
 
-    <input type="text" id="certID" placeholder="Enter Certificate Code">
+    <p><b>Enter Certificate Code</b></p>
+    <p style="font-size:13px;">
+        Format: Student No. | Semester No. | Batch No. | Batch Year
+    </p>
+
+    <input type="text" id="certID" placeholder="Example: 01010125">
     <br>
     <button onclick="verifyCertificate()">Verify</button>
 
     <div class="result" id="result"></div>
+
+    <div class="credit">
+        Site developed by K. Theenash
+    </div>
 </div>
 
 <script>
-    // Add certificate records here
-    const certificates = {
-        "EK-2025-001": {
-            name: "K. Theenash",
-            workshop: "Electronic Class Workshop - Phase I",
-            duration: "01 Sep 2024 - 30 Mar 2025"
-        },
-        "EK-2025-002": {
-            name: "Noel Shaan",
-            workshop: "Electronic Class Workshop - Phase I",
-            duration: "01 Sep 2024 - 30 Mar 2025"
-        },
-                "EK-2025-003": {
-        name: "Student Name A",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
 
-    "EK-2025-004": {
-        name: "Student Name B",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
+const certificates = {
 
-    "EK-2025-005": {
-        name: "Student Name C",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
+    "01010125": { name: "NOEL SHAAN", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
+    "02010125": { name: "KOSANA THEENASH", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
+    "03010125": { name: "VARAD NAIR", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
+    "04010125": { name: "SHREST IYER", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
 
-    "EK-2025-006": {
-        name: "Student Name D",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
+    "05020125": { name: "NOEL SHAAN", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" },
+    "06020125": { name: "KOSANA THEENASH", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" },
+    "07020125": { name: "VARAD NAIR", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" },
+    "08020125": { name: "SHREST IYER", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" }
 
-    "EK-2025-007": {
-        name: "Student Name E",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
+};
 
-    "EK-2025-008": {
-        name: "Student Name F",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
+function verifyCertificate() {
 
-    "EK-2025-009": {
-        name: "Student Name G",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
+    const id = document.getElementById("certID").value.trim();
+    const resultDiv = document.getElementById("result");
 
-    "EK-2025-0010": {
-        name: "Student Name H",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-    },
+    if (certificates[id]) {
+        const cert = certificates[id];
 
-    "EK-2025-011": {
-        name: "Student Name I",
-        workshop: "Electronic Class Workshop - Phase I",
-        duration: "01 Sep 2024 - 30 Mar 2025"
-        }
-    };
-
-    function verifyCertificate() {
-        const id = document.getElementById("certID").value.trim();
-        const resultDiv = document.getElementById("result");
-
-        if (certificates[id]) {
-            const cert = certificates[id];
-            resultDiv.innerHTML = `
-                <p class="valid">✔ Certificate Verified & Valid</p>
-                <p><strong>Name:</strong> ${cert.name}</p>
-                <p><strong>Workshop:</strong> ${cert.workshop}</p>
-                <p><strong>Duration:</strong> ${cert.duration}</p>
-            `;
-        } else {
-            resultDiv.innerHTML = `<p class="invalid">✖ Invalid Certificate ID</p>`;
-        }
+        resultDiv.innerHTML = `
+            <p class="valid">✔ Certificate Verified & Valid</p>
+            <p><strong>Name:</strong> ${cert.name}</p>
+            <p><strong>Semester:</strong> ${cert.sem}</p>
+            <p><strong>Batch:</strong> ${cert.batch}</p>
+            <p><strong>Year:</strong> ${cert.year}</p>
+            <p><strong>Duration:</strong> ${cert.from} to ${cert.to}</p>
+        `;
+    } else {
+        resultDiv.innerHTML = `<p class="invalid">✖ Invalid Certificate ID</p>`;
     }
+}
+
 </script>
 
 </body>
