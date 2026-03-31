@@ -3,7 +3,7 @@
 <head>
     <title>ElectroKids Certificate Verification</title>
 
-    <!-- Fancy Font -->
+    <!-- Stylish Font -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
     <style>
@@ -16,21 +16,16 @@
 
         .title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 40px;
+            font-size: 42px;
             font-weight: bold;
             color: #0a3d2f;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             animation: glow 2s infinite alternate;
         }
 
         @keyframes glow {
             from { text-shadow: 0 0 10px #fff; }
             to { text-shadow: 0 0 20px #0a3d2f; }
-        }
-
-        .logo {
-            width: 120px;
-            margin-bottom: 10px;
         }
 
         .box {
@@ -58,6 +53,10 @@
         .valid {
             color: green;
             font-weight: bold;
+            border: 2px solid green;
+            padding: 10px;
+            border-radius: 10px;
+            background: #eaffea;
             animation: pop 0.5s ease;
         }
 
@@ -93,9 +92,6 @@
 
 <body>
 
-<!-- LOGO -->
-<img src="logo.png" class="logo">
-
 <div class="title">ELECTRO KIDS</div>
 
 <div class="box">
@@ -121,17 +117,20 @@
 
 <script>
 
+// 📜 CERTIFICATE DATABASE
 const certificates = {
-    "01010125": { name: "NOEL SHAAN", sem: "I", batch: "1", year: "2025" },
-    "02010125": { name: "KOSANA THEENASH", sem: "I", batch: "1", year: "2025" },
-    "03010125": { name: "VARAD NAIR", sem: "I", batch: "1", year: "2025" },
-    "04010125": { name: "SHREST IYER", sem: "I", batch: "1", year: "2025" },
-    "05020125": { name: "NOEL SHAAN", sem: "II", batch: "1", year: "2025" },
-    "06020125": { name: "KOSANA THEENASH", sem: "II", batch: "1", year: "2025" },
-    "07020125": { name: "VARAD NAIR", sem: "II", batch: "1", year: "2025" },
-    "08020125": { name: "SHREST IYER", sem: "II", batch: "1", year: "2025" }
+    "01010125": { name: "NOEL SHAAN", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
+    "02010125": { name: "KOSANA THEENASH", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
+    "03010125": { name: "VARAD NAIR", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
+    "04010125": { name: "SHREST IYER", sem: "I", batch: "1", year: "2025", from: "01-Jan-25", to: "30-Jun-25" },
+
+    "05020125": { name: "NOEL SHAAN", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" },
+    "06020125": { name: "KOSANA THEENASH", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" },
+    "07020125": { name: "VARAD NAIR", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" },
+    "08020125": { name: "SHREST IYER", sem: "II", batch: "1", year: "2025", from: "01-Jul-25", to: "31-Jan-26" }
 };
 
+// 🔍 VERIFY FUNCTION
 function verifyCertificate() {
     const id = document.getElementById("certID").value.trim();
     const resultDiv = document.getElementById("result");
@@ -143,6 +142,10 @@ function verifyCertificate() {
             <p class="valid">✔ Certificate Verified & Valid</p>
             <p><strong>${cert.name}</strong></p>
             <p>Semester: ${cert.sem}</p>
+            <p>Batch: ${cert.batch}</p>
+            <p>Year: ${cert.year}</p>
+            <p>From: ${cert.from}</p>
+            <p>To: ${cert.to}</p>
         `;
 
         startConfetti();
@@ -152,7 +155,7 @@ function verifyCertificate() {
     }
 }
 
-/* CONFETTI EFFECT */
+// 🎉 CONFETTI EFFECT
 const canvas = document.getElementById("confetti");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -170,7 +173,6 @@ function startConfetti() {
             d: Math.random() * 5
         });
     }
-
     animateConfetti();
 }
 
@@ -180,10 +182,12 @@ function animateConfetti() {
     confetti.forEach(c => {
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fillStyle = "green";
+        ctx.fillStyle = "gold";
         ctx.fill();
+
+        // FALLING EFFECT
         c.y += c.d;
-if (c.y > canvas.height) c.y = 0;
+        if (c.y > canvas.height) c.y = 0;
     });
 
     requestAnimationFrame(animateConfetti);
