@@ -180,8 +180,8 @@ function animateConfetti() {
     confetti.forEach(c => {
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fillStyle = "gold";
-        ctx.fill();
+        ctx.fillStyle = "green";
+        ctx.fill(red);
         c.y += c.d;
 if (c.y > canvas.height) c.y = 0;
     });
