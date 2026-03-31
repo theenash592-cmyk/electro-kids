@@ -10,7 +10,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, gold, #f5d76e);
+            background: linear-gradient(135deg, gold, #c6aa58);
             padding: 50px;
         }
 
@@ -44,8 +44,8 @@
         button {
             padding: 10px 20px;
             margin-top: 10px;
-            background-color: #0a3d2f;
-            color: white;
+            background-color: #9900FF;
+            color: purple;
             border: none;
             cursor: pointer;
         }
@@ -85,7 +85,7 @@
 
         .credit {
             margin-top: 20px;
-            color: green;
+            color: blue;
         }
     </style>
 </head>
@@ -109,7 +109,7 @@
     <div id="result"></div>
 
     <div class="credit">
-        Site developed by K. Theenash | Electro Kids
+        Site developed by K. Theenash
     </div>
 </div>
 
@@ -182,7 +182,7 @@ function animateConfetti() {
     confetti.forEach(c => {
         ctx.beginPath();
         ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-        ctx.fillStyle = "gold";
+        ctx.fillStyle = "orange";
         ctx.fill();
 
         // FALLING EFFECT
