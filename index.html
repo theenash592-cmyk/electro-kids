@@ -3,14 +3,13 @@
 <head>
     <title>ElectroKids Certificate Verification</title>
 
-    <!-- Stylish Font -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, gold, #c6aa58);
+            background: linear-gradient(135deg, gold, #f5d76e);
             padding: 50px;
         }
 
@@ -41,7 +40,7 @@
             width: 320px;
         }
 
-       button {
+        button {
             padding: 10px 20px;
             margin-top: 10px;
             background-color: #0a3d2f;
@@ -76,16 +75,9 @@
             to {transform: scale(1);}
         }
 
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-
         .credit {
             margin-top: 20px;
-            color: blue;
+            color: green;
         }
     </style>
 </head>
@@ -109,11 +101,9 @@
     <div id="result"></div>
 
     <div class="credit">
-        Site developed by K.Theenash
+        Site developed by K. Theenash | Electro Kids
     </div>
 </div>
-
-<canvas id="confetti"></canvas>
 
 <script>
 
@@ -147,6 +137,10 @@ function verifyCertificate() {
             <p>From: ${cert.from}</p>
             <p>To: ${cert.to}</p>
         `;
+
+    } else {
+        resultDiv.innerHTML = `<p class="invalid">✖ Invalid Certificate Number</p>`;
+    }
 }
 
 </script>
